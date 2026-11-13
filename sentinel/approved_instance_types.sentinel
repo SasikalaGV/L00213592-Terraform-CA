@@ -1,0 +1,19 @@
+import "tfplan/v2" as tfplan
+
+approved = [
+  "t3.micro",
+  "t3.small",
+  "t3.medium"
+]
+
+instances = filter tfplan.resource_changes as _, r {
+ r.type is "aws_instance"
+}
+
+main = rule {
+
+ all instances as _, inst {
+   inst.change.after.instance_type in approved
+ }
+
+}

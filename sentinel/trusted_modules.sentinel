@@ -1,0 +1,14 @@
+import "tfconfig/v2" as tfconfig
+
+main = rule {
+
+ all tfconfig.module_calls as _, module {
+
+   startswith(module.source,
+   "terraform-aws-modules/vpc/aws") and
+
+   module.version is not null
+
+ }
+
+}

@@ -1,0 +1,11 @@
+import "tfplan/v2" as tfplan
+
+all_s3 = filter tfplan.resource_changes as _, r {
+    r.type is "aws_s3_bucket"
+}
+
+main = rule {
+  all all_s3 as _, bucket {
+      bucket.change.after.tags["data_residency"] is "ireland"
+  }
+}

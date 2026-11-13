@@ -1,0 +1,7 @@
+import "tfconfig/v2" as tfconfig
+
+main = rule {
+
+  tfconfig.providers["aws"].version matches "= 5.95.0"
+
+}

@@ -1,0 +1,11 @@
+import "tfplan/v2" as tfplan
+
+approved_regions = [
+  "eu-west-1",
+  "eu-west-2",
+  "eu-central-1"
+]
+
+main = rule {
+  tfplan.variables.aws_region.value in approved_regions
+}
