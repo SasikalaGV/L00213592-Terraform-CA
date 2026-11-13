@@ -1,0 +1,17 @@
+def compound_interest(principal, annual_rate, years, compounds_per_year=1):
+	"""Return the final balance using compound interest.
+
+	annual_rate is a decimal (for example, 0.05 for 5%).
+	"""
+	if principal < 0:
+		raise ValueError("principal must be non-negative")
+	if annual_rate <= -1:
+		raise ValueError("annual_rate must be greater than -1")
+	if years < 0:
+		raise ValueError("years must be non-negative")
+	if compounds_per_year <= 0:
+		raise ValueError("compounds_per_year must be positive")
+
+	return principal * (1 + annual_rate / compounds_per_year) ** (
+		compounds_per_year * years
+	)

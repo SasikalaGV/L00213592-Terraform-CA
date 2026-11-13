@@ -1,0 +1,39 @@
+import "tfplan/v2" as tfplan
+
+security_groups = filter tfplan.resource_changes as _, r {
+  r.type is "aws_security_group"
+}
+
+instances = filter tfplan.resource_changes as _, r {
+  r.type is "aws_instance"
+}
+
+imds_check = rule {
+
+ all instances as _, inst {
+  inst.change.after.metadata_options.http_tokens is "required"
+ }
+
+}
+
+ssh_check = rule {
+
+ all security_groups as _, sg {
+
+  all sg.change.after.ingress as ingress {
+
+   not (
+     ingress.from_port <= 22 and
+     ingress.to_port >= 22 and
+     "0.0.0.0/0" in ingress.cidr_blocks
+   )
+
+  }
+
+ }
+
+}
+
+main = rule {
+  imds_check and ssh_check
+}

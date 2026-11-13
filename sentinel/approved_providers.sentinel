@@ -1,0 +1,15 @@
+import "tfconfig/v2" as tfconfig
+
+approved_sources = [
+  "hashicorp/aws",
+  "hashicorp/random",
+  "hashicorp/null"
+]
+
+main = rule {
+
+ all tfconfig.providers as _, provider {
+   provider.source in approved_sources
+ }
+
+}
