@@ -1,0 +1,52 @@
+{
+	"records": [
+		{
+			"key": "approved_providers",
+			"source": "./approved_providers.sentinel",
+			"sourceSum": "",
+			"dest": "D:/SasiDevOps/IaClab2/L00213592-Terraform-CA/sentinel/approved_providers.sentinel"
+		},
+		{
+			"key": "provider_versions",
+			"source": "./provider_versions.sentinel",
+			"sourceSum": "",
+			"dest": "D:/SasiDevOps/IaClab2/L00213592-Terraform-CA/sentinel/provider_versions.sentinel"
+		},
+		{
+			"key": "trusted_modules",
+			"source": "./trusted_modules.sentinel",
+			"sourceSum": "",
+			"dest": "D:/SasiDevOps/IaClab2/L00213592-Terraform-CA/sentinel/trusted_modules.sentinel"
+		},
+		{
+			"key": "approved_instance_types",
+			"source": "./approved_instance_types.sentinel",
+			"sourceSum": "",
+			"dest": "D:/SasiDevOps/IaClab2/L00213592-Terraform-CA/sentinel/approved_instance_types.sentinel"
+		},
+		{
+			"key": "encrypted_ebs",
+			"source": "./encrypted_ebs.sentinel",
+			"sourceSum": "",
+			"dest": "D:/SasiDevOps/IaClab2/L00213592-Terraform-CA/sentinel/encrypted_ebs.sentinel"
+		},
+		{
+			"key": "network_security",
+			"source": "./network_security.sentinel",
+			"sourceSum": "",
+			"dest": "D:/SasiDevOps/IaClab2/L00213592-Terraform-CA/sentinel/network_security.sentinel"
+		},
+		{
+			"key": "approved_region",
+			"source": "./approved_region.sentinel",
+			"sourceSum": "",
+			"dest": "D:/SasiDevOps/IaClab2/L00213592-Terraform-CA/sentinel/approved_region.sentinel"
+		},
+		{
+			"key": "data_residency",
+			"source": "./data_residency.sentinel",
+			"sourceSum": "",
+			"dest": "D:/SasiDevOps/IaClab2/L00213592-Terraform-CA/sentinel/data_residency.sentinel"
+		}
+	]
+}
