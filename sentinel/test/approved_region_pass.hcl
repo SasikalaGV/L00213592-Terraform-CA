@@ -5,4 +5,9 @@ policy "approved_region" {
   module {
     source = "../../tests/pass/approved_region/tfplan.json"
   }
+
+    test {
+    rules = {
+      main = pass
+    }
 }

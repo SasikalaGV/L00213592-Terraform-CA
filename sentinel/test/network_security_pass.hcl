@@ -5,4 +5,9 @@ policy "network_security" {
   module {
     source = "../../tests/pass/network_security/tfplan.json"
   }
+
+    test {
+    rules = {
+      main = pass
+    }
 }

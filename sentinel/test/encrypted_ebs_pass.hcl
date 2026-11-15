@@ -5,4 +5,9 @@ policy "encrypted_ebs" {
   module {
     source = "../../tests/pass/encrypted_ebs/tfplan.json"
   }
+
+    test {
+    rules = {
+      main = pass
+    }
 }
