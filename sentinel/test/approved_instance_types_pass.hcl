@@ -5,4 +5,10 @@ policy "approved_instance_types" {
   module {
     source = "../../tests/pass/approved_instance_types/tfplan.json"
   }
+
+  test {
+    rules = {
+      main = pass
+    }
+  }
 }

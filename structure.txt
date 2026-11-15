@@ -1,38 +1,237 @@
 Folder PATH listing for volume Hard drive
 Volume serial number is EE17-1C38
 D:.
+|   .gitignore
+|   CODE_OF_CONDUCT.md
+|   LICENSE
+|   README.md
+|   structure.txt
+|   
 +---images
+|       git commands to merge branch to main.png
+|       HCP-terraform-Runupdate.png
+|       IAM User Identity.png
+|       Result from HCP-TerraformRun.png
+|       structure.png
+|       Terraform_approved_instance_types_create_tfplan.png
+|       Terraform_approved_instance_types_init.png
+|       Terraform_Approved_provider_create_testfile.png
+|       Terraform_Approved_provider_init.png
+|       Terraform_Approved_region_Testcase.png
+|       Terraform_Approved_region_tfpan_create.png
+|       Terraform_data_residency_create_tfplan.png
+|       Terraform_data_residency_init.png
+|       Terraform_encrypted_ebs_create_tfplan.png
+|       Terraform_encrypted_ebs_init.png
+|       terraform_fail_approved_instance_types_create_tfplan.png
+|       terraform_fail_approved_instance_types_init.png
+|       terraform_fail_approved_providers_create_tfplan.png
+|       terraform_fail_approved_providers_init.png
+|       terraform_fail_approved_region_create_tfplan.png
+|       terraform_fail_approved_region_init.png
+|       Terraform_fail_data_residency_create_tfplan.png
+|       Terraform_fail_data_residency_init.png
+|       Terraform_fail_encrypted_ebs_create_tfplan.png
+|       Terraform_fail_encrypted_ebs_init.png
+|       terraform_fail_network_security_create_tfplan.png
+|       terraform_fail_network_security_init.png
+|       terraform_fail_provider_validate_create_tfplan.png
+|       terraform_fail_provider_validate_init.png
+|       terraform_fail_trusted_modules_create_tfplan.png
+|       terraform_fail_trusted_modules_init.png
+|       Terraform_init.png
+|       terraform_network_security_create_tfplan.png
+|       terraform_network_security_init.png
+|       Terraform_provider_version_create_tfplan.png
+|       Terraform_provider_version_init.png
+|       Terraform_trusted_modules_create_tfplan.png
+|       Terraform_trusted_modules_init.png
+|       
 +---sentinel
+|   |   approved_instance_types.sentinel
+|   |   approved_providers.sentinel
+|   |   approved_region.sentinel
+|   |   combined_policy.sentinel
+|   |   data_residency.sentinel
+|   |   encrypted_ebs.sentinel
+|   |   network_security.sentinel
+|   |   provider_versions.sentinel
+|   |   sentinel.hcl
+|   |   trusted_modules.sentinel
+|   |   
 |   +---.sentinel
 |   |   +---modules
 |   |   +---plugins
 |   |   +---policies
+|   |   |       manifest.json
+|   |   |       
 |   |   +---statics
 |   |   +---test-modules
 |   |   +---test-plugins
 |   |   \---test-statics
 |   \---test
+|       |   approved_instance_types_pass.hcl
+|       |   approved_providers_pass.hcl
+|       |   approved_region_pass.hcl
+|       |   data_residency_pass.hcl
+|       |   encrypted_ebs_pass.hcl
+|       |   network_security_pass.hcl
+|       |   provider_versions_pass.hcl
+|       |   trusted_modules_pass.hcl
+|       |   
 |       \---.sentinel
 |           +---test-modules
 |           +---test-plugins
 |           \---test-statics
 +---terraform
+|   |   .terraform.lock.hcl
+|   |   main.tf
+|   |   outputs.tf
+|   |   providers.tf
+|   |   tfplan
+|   |   variables.tf
+|   |   versions.tf
+|   |   
+|   \---.terraform
+|       |   environment
+|       |   terraform.tfstate
+|       |   
+|       \---providers
+|           \---registry.terraform.io
+|               \---hashicorp
+|                   \---aws
+|                       \---5.95.0
+|                           \---windows_amd64
+|                                   LICENSE.txt
+|                                   terraform-provider-aws_v5.95.0_x5.exe
+|                                   
++---test
+|       approved_instance_types_pass.hcl
+|       
 \---Tests
     +---fail
     |   +---approved_instance_types
+    |   |       .terraform.lock.hcl
+    |   |       main.tf
+    |   |       providers.tf
+    |   |       tfplan
+    |   |       tfplan.json
+    |   |       versions.tf
+    |   |       
     |   +---approved_providers
+    |   |       .terraform.lock.hcl
+    |   |       main.tf
+    |   |       tfplan
+    |   |       tfplan.json
+    |   |       versions.tf
+    |   |       
     |   +---approved_region
+    |   |       .terraform.lock.hcl
+    |   |       main.tf
+    |   |       providers.tf
+    |   |       tfplan
+    |   |       tfplan.json
+    |   |       versions.tf
+    |   |       
     |   +---data_residency
+    |   |       .terraform.lock.hcl
+    |   |       main.tf
+    |   |       providers.tf
+    |   |       tfplan
+    |   |       tfplan.json
+    |   |       versions.tf
+    |   |       
     |   +---encrypted_ebs
+    |   |       .terraform.lock.hcl
+    |   |       main.tf
+    |   |       providers.tf
+    |   |       tfplan
+    |   |       tfplan.json
+    |   |       versions.tf
+    |   |       
     |   +---network_security
+    |   |       .terraform.lock.hcl
+    |   |       main.tf
+    |   |       providers.tf
+    |   |       tfplan
+    |   |       tfplan.json
+    |   |       versions.tf
+    |   |       
     |   +---provider_versions
+    |   |       .terraform.lock.hcl
+    |   |       main.tf
+    |   |       tfplan
+    |   |       tfplan.json
+    |   |       vesrions.tf
+    |   |       
     |   \---trusted_modules
+    |           .terraform.lock.hcl
+    |           main.tf
+    |           providers.tf
+    |           tfplan
+    |           tfplan.json
+    |           versions.tf
+    |           
     \---pass
         +---approved_instance_types
+        |       .terraform.lock.hcl
+        |       main.tf
+        |       providers.tf
+        |       tfplan
+        |       tfplan.json
+        |       versions.tf
+        |       
         +---approved_providers
+        |       .terraform.lock.hcl
+        |       main.tf
+        |       tfplan
+        |       tfplan.json
+        |       versions.tf
+        |       
         +---approved_region
+        |       .terraform.lock.hcl
+        |       main.tf
+        |       providers.tf
+        |       tfplan
+        |       tfplan.json
+        |       version.tf
+        |       
         +---data_residency
+        |       .terraform.lock.hcl
+        |       main.tf
+        |       providers.tf
+        |       tfplan
+        |       tfplan.json
+        |       version.tf
+        |       
         +---encrypted_ebs
+        |       .terraform.lock.hcl
+        |       main.tf
+        |       providers.tf
+        |       tfplan
+        |       tfplan.json
+        |       versions.tf
+        |       
         +---network_security
+        |       .terraform.lock.hcl
+        |       main.tf
+        |       providers.tf
+        |       tfplan
+        |       tfplan.json
+        |       versions.tf
+        |       
         +---provider_versions
+        |       .terraform.lock.hcl
+        |       main.tf
+        |       tfplan
+        |       tfplan.json
+        |       vesrions.tf
+        |       
         \---trusted_modules
+                .terraform.lock.hcl
+                main.tf
+                providers.tf
+                tfplan
+                tfplan.json
+                version.tf
+                

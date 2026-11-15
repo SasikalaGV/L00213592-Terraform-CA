@@ -5,4 +5,9 @@ policy "provider_versions" {
   module {
     source = "../../tests/pass/provider_versions/tfplan.json"
   }
+
+    test {
+    rules = {
+      main = pass
+    }
 }

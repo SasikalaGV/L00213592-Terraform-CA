@@ -5,4 +5,9 @@ policy "data_residency" {
   module {
     source = "../../tests/pass/data_residency/tfplan.json"
   }
+
+    test {
+    rules = {
+      main = pass
+    }
 }

@@ -5,4 +5,8 @@ policy "trusted_modules" {
   module {
     source = "../../tests/pass/trusted_modules/tfplan.json"
   }
+    test {
+    rules = {
+      main = pass
+    }
 }

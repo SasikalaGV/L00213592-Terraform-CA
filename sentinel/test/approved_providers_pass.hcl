@@ -5,4 +5,9 @@ policy "approved_providers" {
   module {
     source = "../../tests/pass/approved_providers/tfplan.json"
   }
+
+    test {
+    rules = {
+      main = pass
+    }
 }
