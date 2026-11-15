@@ -1,0 +1,35 @@
+Running plan in HCP Terraform. Output will stream here. Pressing Ctrl-C
+will stop streaming the logs, but will not stop the plan running remotely.
+
+Preparing the remote plan...
+
+The remote workspace is configured to work with configuration at
+terraform/ relative to the target repository.
+
+Terraform will upload the contents of the following directory,
+excluding files or directories as defined by a .terraformignore file
+at D:\SasiDevOps\IaClab2\L00213592-Terraform-CA/.terraformignore (if it is present),
+in order to capture the filesystem context the remote workspace expects:
+    D:\SasiDevOps\IaClab2\L00213592-Terraform-CA
+
+To view this run in a browser, visit:
+https://app.terraform.io/app/ATU-DevOps-L00213592/L00213592-Terraform-CA2/runs/run-BREiGocpwSsdvyxf
+
+Waiting for the plan to start...
+
+Terraform v1.17.2
+on linux_amd64
+
+Initializing plugins and modules...
+aws_instance.web: Refreshing state... [id=i-032dfd32b283b9d46]
+aws_instance.web: Drift detected (update)
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
