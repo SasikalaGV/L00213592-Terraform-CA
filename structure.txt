@@ -1,0 +1,38 @@
+Folder PATH listing for volume Hard drive
+Volume serial number is EE17-1C38
+D:.
++---images
++---sentinel
+|   +---.sentinel
+|   |   +---modules
+|   |   +---plugins
+|   |   +---policies
+|   |   +---statics
+|   |   +---test-modules
+|   |   +---test-plugins
+|   |   \---test-statics
+|   \---test
+|       \---.sentinel
+|           +---test-modules
+|           +---test-plugins
+|           \---test-statics
++---terraform
+\---Tests
+    +---fail
+    |   +---approved_instance_types
+    |   +---approved_providers
+    |   +---approved_region
+    |   +---data_residency
+    |   +---encrypted_ebs
+    |   +---network_security
+    |   +---provider_versions
+    |   \---trusted_modules
+    \---pass
+        +---approved_instance_types
+        +---approved_providers
+        +---approved_region
+        +---data_residency
+        +---encrypted_ebs
+        +---network_security
+        +---provider_versions
+        \---trusted_modules
