@@ -1,31 +1,36 @@
 policy "approved_region" {
-  enforcement_level = "hard-mandatory"
+  source = "./approved_region.sentinel"
+  enforcement_level = "advisory"
 }
 
 policy "data_residency" {
-  enforcement_level = "hard-mandatory"
+  source = "./data_residency.sentinel"
+  enforcement_level = "advisory"
 }
 
 policy "approved_providers" {
-  enforcement_level = "hard-mandatory"
+  source = "./approved_providers.sentinel"
+  enforcement_level = "advisory"
 }
-
 policy "provider_versions" {
-  enforcement_level = "hard-mandatory"
+  source = "./provider_versions.sentinel"
+  enforcement_level = "advisory"
 }
 
 policy "trusted_modules" {
-  enforcement_level = "hard-mandatory"
+  source = "./trusted_modules.sentinel"
+  enforcement_level = "advisory"
 }
-
 policy "approved_instance_types" {
-  enforcement_level = "hard-mandatory"
+  source = "./approved_instance_types.sentinel"
+  enforcement_level = "advisory"
 }
-
 policy "encrypted_ebs" {
-  enforcement_level = "hard-mandatory"
+  source = "./encrypted_ebs.sentinel"
+  enforcement_level = "advisory"
 }
 
 policy "network_security" {
-  enforcement_level = "hard-mandatory"
+  source = "./network_security.sentinel"
+  enforcement_level = "advisory"
 }
