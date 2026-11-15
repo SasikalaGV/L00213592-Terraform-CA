@@ -20,6 +20,7 @@ bin-release/
 # Terraform
 # Terraform working direcory and files
 **/.terraform/*
+.terraform/
 
 # Terraform state files
 *.tfstate
