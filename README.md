@@ -325,7 +325,33 @@ Additional controls such as code review, signed commits, CI/CD security scanning
 
 ---
 
-# 13. Conclusion
+# 13. AI usage
+
+For this assignment I used Copilot with Agent GLP6.5. Since I am entirely new to this Infrastructure project, I requested the Agent to walkthrough the assignment step by step.
+
+Prompts used:
+
+To understand the assignment:
+
+1. Explain the given assignment step by step 
+2. What is hashicorp sentinel and how to use it with terraform files
+3. I do have aws free account and please guide me to include my account to test the files
+
+Prompt used while working with the files:
+1. Explain the terraform files 
+2. explain the sentinel files and the usage
+3. how to create the tfplan files for pass and fail scenarios and stepts to safe the file
+4. Since I had difficulties with checkingin the .terraform large files, I used, guide me to checkin the terraform files in git
+5. what does digital sovereignty mean, why does it matter if data is in ireland
+6. Sentinel cli in laptop couldn't test the sentinel file, what is the workaround to test it
+7. what is hashicorp and how to create HCP terraform account
+8. Guide me to create Organisation and workspace for the assignment
+9. What is the workaround if there is no option to add policy in the policyset
+10. difference between advisory, soft mandatory and hard mandatory in sentinel?
+11. how to run the policies using the cli 
+12. guide me to write read me file
+
+# 14. Conclusion
 
 This project demonstrates the practical implementation of Policy-as-Code using HashiCorp Terraform and Sentinel. The solution successfully enforces governance requirements related to digital sovereignty, supply chain security, and infrastructure security while providing both compliant and non-compliant test scenarios to validate policy effectiveness.
 
