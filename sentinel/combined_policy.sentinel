@@ -1,0 +1,217 @@
+# combined_policy.sentinel
+# All checks in ONE policy (use as a single hard-mandatory policy in HCP Terraform Free)
+#
+#   1. provider_versions      - aws provider pinned to 5.95.0
+#   2. approved_providers     - only hashicorp/aws, hashicorp/random, hashicorp/null
+#   3. approved_region        - var.aws_region must be an approved EU region
+#   4. data_residency         - every S3 bucket tagged data_residency = "ireland"
+#   5. approved_instance_types- only t3.micro / t3.small / t3.medium
+#   6. encrypted_ebs          - EC2 root disk must be encrypted
+#   7. network_security       - IMDSv2 required + no SSH (22) from 0.0.0.0/0
+
+import "tfconfig/v2" as tfconfig
+import "tfplan/v2" as tfplan
+import "strings"
+
+# ------------------------------------------------------------ settings
+
+approved_aws_version = "5.95.0"
+
+approved_sources = [
+	"hashicorp/aws",
+	"hashicorp/random",
+	"hashicorp/null",
+]
+
+approved_regions = [
+	"eu-west-1",
+	"eu-west-2",
+	"eu-central-1",
+]
+
+approved_instance_types = [
+	"t3.micro",
+	"t3.small",
+	"t3.medium",
+]
+
+# ------------------------------------------------------------ helpers
+
+# only resources that are being created or updated
+changes = filter tfplan.resource_changes as _, r {
+	r.mode is "managed" and
+		(r.change.actions contains "create" or r.change.actions contains "update")
+}
+
+instances = filter changes as _, r { r.type is "aws_instance" }
+s3_buckets = filter changes as _, r { r.type is "aws_s3_bucket" }
+security_groups = filter changes as _, r { r.type is "aws_security_group" }
+
+# turn null into an empty list
+as_list = func(v) {
+	if v is null {
+		return []
+	}
+	return v
+}
+
+# "registry.terraform.io/hashicorp/aws" -> "hashicorp/aws"
+short_source = func(full) {
+	return strings.trim_prefix(full, "registry.terraform.io/")
+}
+
+# ------------------------------------------------------------ 1. provider version
+
+check_provider_version = func() {
+	ok = true
+	for tfconfig.providers as key, p {
+		# only check the root module's aws provider
+		if (p.module_address else "") is not "" {
+			continue
+		}
+		if short_source(p.full_name else "") is not "hashicorp/aws" {
+			continue
+		}
+		v = strings.trim_space(p.version_constraint else "")
+		v = strings.trim_space(strings.trim_prefix(v, "="))
+		if v is not approved_aws_version {
+			print("FAIL [provider_versions]: aws provider version is '" + (p.version_constraint else "") + "' - must be pinned to", approved_aws_version)
+			ok = false
+		}
+	}
+	return ok
+}
+
+# ------------------------------------------------------------ 2. approved providers
+
+check_provider_sources = func() {
+	ok = true
+	for tfconfig.providers as key, p {
+		src = short_source(p.full_name else "unknown")
+		if src not in approved_sources {
+			print("FAIL [approved_providers]: provider", key, "comes from", src, "- not approved")
+			ok = false
+		}
+	}
+	return ok
+}
+
+# ------------------------------------------------------------ 3. approved region
+
+check_region = func() {
+	region = tfplan.variables["aws_region"].value else "not set"
+	if region not in approved_regions {
+		print("FAIL [approved_region]: var.aws_region is", region, "- approved:", approved_regions)
+		return false
+	}
+	return true
+}
+
+# ------------------------------------------------------------ 4. data residency
+
+check_data_residency = func() {
+	ok = true
+	for s3_buckets as address, b {
+		tags = b.change.after.tags else {}
+		if tags is null {
+			tags = {}
+		}
+		value = tags["data_residency"] else "missing"
+		if value is not "ireland" {
+			print("FAIL [data_residency]:", address, "tag data_residency is", value, "- must be ireland")
+			ok = false
+		}
+	}
+	return ok
+}
+
+# ------------------------------------------------------------ 5. instance types
+
+check_instance_types = func() {
+	ok = true
+	for instances as address, inst {
+		itype = inst.change.after.instance_type else "unknown"
+		if itype not in approved_instance_types {
+			print("FAIL [approved_instance_types]:", address, "instance type", itype, "- approved:", approved_instance_types)
+			ok = false
+		}
+	}
+	return ok
+}
+
+# ------------------------------------------------------------ 6. encrypted EBS
+
+check_encrypted_ebs = func() {
+	ok = true
+	for instances as address, inst {
+		root = as_list(inst.change.after.root_block_device else [])
+		if length(root) is 0 or (root[0].encrypted else false) is not true {
+			print("FAIL [encrypted_ebs]:", address, "root disk is not encrypted")
+			ok = false
+		}
+	}
+	return ok
+}
+
+# ------------------------------------------------------------ 7. network security
+
+check_imdsv2 = func() {
+	ok = true
+	for instances as address, inst {
+		opts = as_list(inst.change.after.metadata_options else [])
+		tokens = "not set"
+		if length(opts) > 0 {
+			tokens = opts[0].http_tokens else "not set"
+		}
+		if tokens is not "required" {
+			print("FAIL [network_security]:", address, "http_tokens is", tokens, "- IMDSv2 must be required")
+			ok = false
+		}
+	}
+	return ok
+}
+
+check_ssh = func() {
+	ok = true
+	for security_groups as address, sg {
+		for as_list(sg.change.after.ingress else []) as ingress {
+			from = ingress.from_port else 0
+			to = ingress.to_port else 0
+			cidrs = as_list(ingress.cidr_blocks else [])
+			if from <= 22 and to >= 22 and "0.0.0.0/0" in cidrs {
+				print("FAIL [network_security]:", address, "allows SSH (22) from 0.0.0.0/0")
+				ok = false
+			}
+		}
+	}
+	return ok
+}
+
+# ------------------------------------------------------------ run every check (so all FAIL messages print)
+
+r_version = check_provider_version()
+r_sources = check_provider_sources()
+r_region = check_region()
+r_residency = check_data_residency()
+r_types = check_instance_types()
+r_ebs = check_encrypted_ebs()
+r_imds = check_imdsv2()
+r_ssh = check_ssh()
+
+provider_versions = rule { r_version }
+approved_providers = rule { r_sources }
+approved_region = rule { r_region }
+data_residency = rule { r_residency }
+approved_instance_types = rule { r_types }
+encrypted_ebs = rule { r_ebs }
+network_security = rule { r_imds and r_ssh }
+
+main = rule {
+	provider_versions and
+	approved_providers and
+	approved_region and
+	data_residency and
+	approved_instance_types and
+	encrypted_ebs and
+	network_security
+}
